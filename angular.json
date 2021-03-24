@@ -123,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "gh-search"
+  "defaultProject": "gh-search",
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
+  }
 }
