@@ -1,0 +1,32 @@
+<main *ngIf="data$ | async as data">
+  <section *ngIf="data.items!.length > 0; else noResults">
+    <h2>Total results: {{ data.total_count }}</h2>
+
+    <mat-paginator
+      [length]="data.total_count"
+      [pageSize]="20"
+      [pageSizeOptions]="[5, 10, 20, 100]"
+      (page)="
+        getData({
+          perPage: $event.pageSize,
+          page: $event.pageIndex + 1
+        })
+      "
+    >
+    </mat-paginator>
+
+    <article *ngFor="let item of data.items">
+      <app-result-card
+        [name]="item.login"
+        [profilePicture]="item.avatar_url"
+        [starCount]="item.score"
+        [profileUrl]="item.html_url"
+      ></app-result-card>
+    </article>
+  </section>
+
+  <ng-template #noResults>
+    <app-no-results *ngIf="cat$ | async as cat" [imgDataSource]="cat"></app-no-results>
+  </ng-template>
+  
+</main>
