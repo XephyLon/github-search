@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 
 import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import {
+  MatFormFieldModule,
+} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -11,7 +13,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSelectModule } from '@angular/material/select';
 import { MaterialSortOrderComponent } from './material-sort-order/material-sort-order.component';
-import { CommonModule } from "@angular/common";
+import { CommonModule } from '@angular/common';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const modules = [
   CommonModule,
@@ -24,7 +27,8 @@ const modules = [
   MatCardModule,
   MatToolbarModule,
   MatSidenavModule,
-  MatSelectModule
+  MatSelectModule,
+  MatSnackBarModule,
 ];
 
 @NgModule({
