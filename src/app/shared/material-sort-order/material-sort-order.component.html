@@ -1,0 +1,19 @@
+<button
+  mat-icon-button
+  [color]="isAsc && 'primary'"
+  [ngClass]="{ 'mat-elevation-z6': isAsc }"
+  class="asc"
+  (click)="setAsc(true)"
+>
+  <mat-icon>arrow_upward</mat-icon>
+</button>
+
+<button
+  mat-icon-button
+  [color]="!isAsc && 'primary'"
+  [ngClass]="{ 'mat-elevation-z6': !isAsc }"
+  class="desc"
+  (click)="setAsc(false)"
+>
+  <mat-icon>arrow_downward</mat-icon>
+</button>

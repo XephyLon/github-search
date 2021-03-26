@@ -33,6 +33,10 @@ $gh-search-theme: mat-dark-theme((
 // that you are using.
 @include angular-material-theme($gh-search-theme);
 
+
+@import './app/shared/material-sort-order/material-sort-order.component.scss';
+@include mat-sort-order-theme($gh-search-theme);
+
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
