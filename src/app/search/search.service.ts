@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from "rxjs";
 import { map } from "rxjs/operators";
 import { Cat } from "./models/cat.model";
+import { SortOption } from "./models/search-params.model";
 import { SearchResponseModel } from './models/search-response.model';
 
 @Injectable({
@@ -17,6 +18,7 @@ export class SearchService {
   public data$ = this._data$.asObservable()
 
   private lastQuery = ''
+  private sortBy: SortOption = ''
 
   set data(response: SearchResponseModel) {
     this._data$.next(response)
@@ -26,11 +28,15 @@ export class SearchService {
     this.lastQuery = value
   }
 
+  set sort(value: SortOption) {
+    this.sortBy = value
+  }
+
   get(
     perPage: number = 20,
     page: number = 1,
     order: 'asc' | 'desc' = 'desc',
-    sort: 'followers' | 'repositories' | 'joined' | '' = 'followers'
+    sort: SortOption = this.sortBy
   ) {
     return this.http.get<SearchResponseModel>(
       `${
