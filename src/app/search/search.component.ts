@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Cat } from "./models/cat.model";
-import { SearchParams } from './models/search-params.model';
+import { SearchParams, SortOption } from './models/search-params.model';
 import { SearchResponseModel } from './models/search-response.model';
 import { sortOptions } from "./search.data";
 import { SearchService } from './search.service';
@@ -18,15 +18,33 @@ export class SearchComponent implements OnInit {
 
   sortOptions = sortOptions
 
+  perPage = 20
+  page = 1
+  order: 'asc' | 'desc' = 'asc'
+  sort: SortOption = ''
+
   constructor(private ss: SearchService) {}
 
-  getData(params?: SearchParams) {
+  getData() {
     return this.ss.get(
-      params?.perPage,
-      params?.page,
-      params?.order,
-      params?.sort
+      this.perPage,
+      this.page,
+      this.order,
+      this.sort,
     );
+  }
+
+  setPagination(perPage: number, page: number) {
+    this.perPage = perPage
+    this.page = page
+  }
+
+  setOrder(isAsc: boolean) {
+    this.order = isAsc ? 'asc' : 'desc'
+  }
+
+  sortBy(sortOption: SortOption) {
+    this.sort = sortOption
   }
 
   
