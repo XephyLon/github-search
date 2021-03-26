@@ -19,3 +19,10 @@ article {
         margin-bottom: 24px;
     }
 }
+
+.sort-and-order {
+    display: flex;
+    & > * {
+        margin-right: 24px;
+    }
+}

@@ -1,11 +1,15 @@
-<mat-form-field>
-  <mat-label>Sort Options</mat-label>
-  <mat-select>
-    <mat-option *ngFor="let item of sortOptions" [value]="item.value">{{
-      item.name
-    }}</mat-option>
-  </mat-select>
-</mat-form-field>
+<div class="sort-and-order">
+  <mat-form-field>
+    <mat-label>Sort Options</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let item of sortOptions" [value]="item.value">{{
+        item.name
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-sort-order></mat-sort-order>
+</div>
 
 
 <main *ngIf="data$ | async as data">
