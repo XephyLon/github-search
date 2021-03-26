@@ -30,12 +30,6 @@ const modules = [
 @NgModule({
   imports: [...modules],
   exports: [...modules, MaterialSortOrderComponent],
-  providers: [{
-    provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
-    useValue: {
-      appearance: 'fill'
-    }
-  }],
   declarations: [MaterialSortOrderComponent],
 })
 export class MaterialModule {}
