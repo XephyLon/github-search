@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from "rxjs";
 import { map } from "rxjs/operators";
-import { CatModel } from "./models/cat.model";
+import { Cat } from "./models/cat.model";
 import { SearchResponseModel } from './models/search-response.model';
 
 @Injectable({
@@ -40,6 +40,6 @@ export class SearchService {
   }
 
   getRandomCat() {
-    return this.http.get<CatModel[]>('https://api.thecatapi.com/v1/images/search').pipe(map(res => res[0]))
+    return this.http.get<Cat[]>('https://api.thecatapi.com/v1/images/search').pipe(map(res => res[0]))
   }
 }

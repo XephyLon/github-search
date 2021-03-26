@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CatModel } from "./models/cat.model";
-import { SearchParamsModel } from './models/search-params.model';
+import { Cat } from "./models/cat.model";
+import { SearchParams } from './models/search-params.model';
 import { SearchResponseModel } from './models/search-response.model';
+import { sortOptions } from "./search.data";
 import { SearchService } from './search.service';
 
 @Component({
@@ -13,11 +14,13 @@ import { SearchService } from './search.service';
 })
 export class SearchComponent implements OnInit {
   data$: Observable<SearchResponseModel> = new Observable();
-  cat$: Observable<CatModel> = new Observable()
+  cat$: Observable<Cat> = new Observable()
+
+  sortOptions = sortOptions
 
   constructor(private ss: SearchService) {}
 
-  getData(params?: SearchParamsModel) {
+  getData(params?: SearchParams) {
     return this.ss.get(
       params?.perPage,
       params?.page,

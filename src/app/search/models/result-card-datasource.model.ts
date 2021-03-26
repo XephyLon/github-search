@@ -1,4 +1,4 @@
-export interface ResultCardDatasourceModel {
+export interface ResultCardDatasource {
     profilePicture: string;
     name: string;
     followerCount: number;

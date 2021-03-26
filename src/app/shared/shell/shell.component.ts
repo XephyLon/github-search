@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { faAngular, faGithub } from "@fortawesome/free-brands-svg-icons";
-import { SearchParamsModel } from "src/app/search/models/search-params.model";
 import { SearchService } from "src/app/search/search.service";
 
 @Component({

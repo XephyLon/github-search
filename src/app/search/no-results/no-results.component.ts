@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { CatModel } from "../models/cat.model";
+import { Cat } from "../models/cat.model";
 
 @Component({
   selector: 'app-no-results',
@@ -8,6 +8,6 @@ import { CatModel } from "../models/cat.model";
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NoResultsComponent {
-  @Input() imgDataSource!: CatModel
+  @Input() imgDataSource!: Cat
 
 }
