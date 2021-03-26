@@ -1,3 +1,13 @@
+<mat-form-field>
+  <mat-label>Sort Options</mat-label>
+  <mat-select>
+    <mat-option *ngFor="let item of sortOptions" [value]="item.value">{{
+      item.name
+    }}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+
 <main *ngIf="data$ | async as data">
   <section *ngIf="data.items!.length > 0; else noResults">
     <h2>Total results: {{ data.total_count }}</h2>
@@ -26,7 +36,9 @@
   </section>
 
   <ng-template #noResults>
-    <app-no-results *ngIf="cat$ | async as cat" [imgDataSource]="cat"></app-no-results>
+    <app-no-results
+      *ngIf="cat$ | async as cat"
+      [imgDataSource]="cat"
+    ></app-no-results>
   </ng-template>
-  
 </main>
