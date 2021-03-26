@@ -1,0 +1,10 @@
+<mat-card
+  class="hover-elevation"
+>
+  <img [src]="profilePicture" [alt]="name" />
+  <article>
+    <h2><fa-icon [icon]="faIdCard"></fa-icon>{{ name }}</h2>
+    <h3><fa-icon [icon]="faStar"></fa-icon>{{ starCount }}</h3>
+    <p>{{ description }}</p>
+  </article>
+</mat-card>
