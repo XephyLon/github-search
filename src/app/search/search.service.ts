@@ -1,10 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { forkJoin, Subject } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { Cat } from './models/cat.model';
 import { SortOption } from './models/search-params.model';
-import { SearchResponseModel } from './models/search-response.model';
+import { SearchResponse, User } from './models/search-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -13,12 +13,12 @@ export class SearchService {
   protected urlPath = 'https://api.github.com/search/users?q=';
   private lastQuery = '';
 
-  private _data$: Subject<SearchResponseModel> = new Subject();
+  private _data$: Subject<SearchResponse> = new Subject();
   public data$ = this._data$.asObservable();
 
   constructor(private http: HttpClient) {}
 
-  set data(response: SearchResponseModel) {
+  set data(response: SearchResponse) {
     this._data$.next(response);
   }
 
@@ -41,8 +41,14 @@ export class SearchService {
         .set('order', order),
     };
     return this.http
-      .get<SearchResponseModel>(this.urlPath, params)
-      .subscribe({ next: (res) => (this.data = res) });
+      .get<SearchResponse>(this.urlPath, params).pipe(
+        switchMap(items => {
+          return forkJoin(items.items?.map(item => {
+            return this.http.get<User>(item.url)
+          }))
+          .pipe(map(data => ({...items, items: data})))
+        })
+      )
   }
 
   getRandomCat() {

@@ -1,4 +1,4 @@
-export interface SearchResponseModel {
+export interface SearchResponse {
   total_count: number;
   incomplete_results: boolean;
   items?: Item[] | null;

@@ -1,10 +1,16 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Cat } from "./models/cat.model";
-import { SearchParams, SortOption } from './models/search-params.model';
-import { SearchResponseModel } from './models/search-response.model';
+import { SortOption } from './models/search-params.model';
+import { User } from './models/search-response.model';
 import { sortOptions } from "./search.data";
 import { SearchService } from './search.service';
+
+type ResponseData = Observable<{
+  items: User[] | undefined;
+  total_count: number;
+  incomplete_results: boolean;
+}>
 
 @Component({
   selector: 'app-search',
@@ -13,7 +19,7 @@ import { SearchService } from './search.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchComponent implements OnInit {
-  data$: Observable<SearchResponseModel> = new Observable();
+  data$: ResponseData = new Observable();
   cat$: Observable<Cat> = new Observable()
 
   sortOptions = sortOptions
@@ -46,11 +52,15 @@ export class SearchComponent implements OnInit {
   sortBy(sortOption: SortOption) {
     this.sort = sortOption
   }
-
   
 
   ngOnInit() {
-    this.data$ = this.ss.data$
+    this.data$ = this.ss.get(
+      this.perPage,
+      this.page,
+      this.order,
+      this.sort,
+    );
     this.cat$ = this.ss.getRandomCat()
   }
 }
