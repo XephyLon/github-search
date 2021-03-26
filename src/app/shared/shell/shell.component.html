@@ -1,0 +1,22 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav-content>
+    <mat-toolbar>
+      <span routerLink="/">
+        <fa-icon [icon]="faGithub"></fa-icon> GitHub Search</span
+      >
+
+      <mat-form-field appearance="outline">
+        <mat-label>Search</mat-label>
+        <input
+          #query
+          matInput
+          (keydown.enter)="getData(query.value)"
+        />
+        <mat-icon matSuffix (click)="getData(query.value)">search</mat-icon>
+      </mat-form-field>
+      <span> Made with<fa-icon [icon]="faAngular"></fa-icon> </span>
+    </mat-toolbar>
+
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>
