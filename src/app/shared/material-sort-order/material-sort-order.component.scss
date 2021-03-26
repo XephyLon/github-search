@@ -1,7 +1,4 @@
 @mixin mat-sort-order-theme($theme) {
-    $primary: map-get($theme, primary);
-    $warn: map-get($theme, warn);
-    $accent: map-get($theme, accent);
     $background: map-get($theme, background);
 
     .hover {
