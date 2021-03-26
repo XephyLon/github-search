@@ -1,14 +1,14 @@
 <div class="sort-and-order">
   <mat-form-field appearance="fill">
     <mat-label>Sort Options</mat-label>
-    <mat-select (valueChange)="sortBy($event); getData()">
+    <mat-select (valueChange)="sortBy($event)">
       <mat-option *ngFor="let item of sortOptions" [value]="item.value">{{
         item.name
       }}</mat-option>
     </mat-select>
   </mat-form-field>
 
-  <mat-sort-order (valueChange)="setOrder($event); getData()"></mat-sort-order>
+  <mat-sort-order (valueChange)="setOrder($event)"></mat-sort-order>
 </div>
 
 
@@ -20,7 +20,7 @@
       [length]="data.total_count"
       [pageSize]="20"
       [pageSizeOptions]="[5, 10, 20, 100]"
-      (page)="setPagination($event.pageSize, $event.pageIndex + 1); getData()"
+      (page)="setPagination($event.pageSize, $event.pageIndex + 1)"
     >
     </mat-paginator>
 

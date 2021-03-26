@@ -15,7 +15,6 @@ export class ShellComponent {
   constructor(private ss: SearchService) {}
 
   getData(query: string) {
-    this.ss.query = query;
-    return this.ss.get();
+    this.ss.searchQuery$.next(query)
   }
 }

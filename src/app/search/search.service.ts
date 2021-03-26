@@ -1,55 +1,50 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { forkJoin, Subject } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, forkJoin } from 'rxjs';
+import { distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 import { Cat } from './models/cat.model';
-import { SortOption } from './models/search-params.model';
 import { SearchResponse, User } from './models/search-response.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SearchService {
-  protected urlPath = 'https://api.github.com/search/users?q=';
-  private lastQuery = '';
-
-  private _data$: Subject<SearchResponse> = new Subject();
-  public data$ = this._data$.asObservable();
-
   constructor(private http: HttpClient) {}
 
-  set data(response: SearchResponse) {
-    this._data$.next(response);
-  }
+  protected urlPath = 'https://api.github.com/search/users';
 
-  set query(value: string) {
-    this.lastQuery = value
-  }
+  searchQuery$ = new BehaviorSubject('Xephy');
+  pagination$ = new BehaviorSubject({ perPage: 20, page: 1 });
+  sort$ = new BehaviorSubject('');
+  order$ = new BehaviorSubject('asc')
 
-  get(
-    perPage: number = 20,
-    page: number = 1,
-    order: 'asc' | 'desc' = 'desc',
-    sort: SortOption = ''
-  ) {
+
+  data$ = combineLatest([
+    this.searchQuery$.pipe(distinctUntilChanged()),
+    this.pagination$,
+    this.sort$,
+    this.order$,
+  ]).pipe(switchMap(([searchQuery, { perPage, page }, sort, order]) => {
+    
     const params: { params: HttpParams } = {
       params: new HttpParams()
-        .set('q', this.lastQuery)
+        .set('q', searchQuery)
         .set('per_page', String(perPage))
         .set('page', String(page))
         .set('sort', sort)
         .set('order', order),
     };
-    return this.http
-      .get<SearchResponse>(this.urlPath, params).pipe(
-        switchMap(items => {
-          return forkJoin(items.items?.map(item => {
-            return this.http.get<User>(item.url)
-          }))
-          .pipe(map(data => ({...items, items: data})))
-        })
-      )
-  }
+
+    return this.http.get<SearchResponse>(this.urlPath, params).pipe(
+      switchMap((items) => {
+        return forkJoin(
+          items.items?.map((item) => {
+            return this.http.get<User>(item.url);
+          })
+        ).pipe(map((data) => ({ ...items, items: data })));
+      })
+    );
+  }))
 
   getRandomCat() {
     return this.http
