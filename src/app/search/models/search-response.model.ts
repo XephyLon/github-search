@@ -60,3 +60,9 @@ export interface User {
   created_at: string;
   updated_at: string;
 }
+
+export interface ResponseData {
+  items: User[] | undefined;
+  total_count: number;
+  incomplete_results: boolean;
+}

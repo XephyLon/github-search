@@ -2,15 +2,9 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Cat } from "./models/cat.model";
 import { SortOption } from './models/search-params.model';
-import { User } from './models/search-response.model';
+import { ResponseData } from "./models/search-response.model";
 import { sortOptions } from "./search.data";
 import { SearchService } from './search.service';
-
-type ResponseData = Observable<{
-  items: User[] | undefined;
-  total_count: number;
-  incomplete_results: boolean;
-}>
 
 @Component({
   selector: 'app-search',
@@ -19,7 +13,7 @@ type ResponseData = Observable<{
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchComponent implements OnInit {
-  data$: ResponseData = new Observable();
+  data$: Observable<ResponseData> = new Observable();
   cat$: Observable<Cat> = new Observable()
 
   sortOptions = sortOptions
