@@ -1,14 +1,14 @@
 <div class="sort-and-order">
   <mat-form-field appearance="fill">
     <mat-label>Sort Options</mat-label>
-    <mat-select (valueChange)="sortBy($event)">
+    <mat-select #select [value]="''" (valueChange)="sortBy($event)">
       <mat-option *ngFor="let item of sortOptions" [value]="item.value">{{
         item.name
       }}</mat-option>
     </mat-select>
   </mat-form-field>
 
-  <mat-sort-order (valueChange)="setOrder($event)"></mat-sort-order>
+  <mat-sort-order *ngIf="select.value !== ''" (valueChange)="setOrder($event)"></mat-sort-order>
 </div>
 
 
