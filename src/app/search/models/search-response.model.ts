@@ -46,9 +46,9 @@ export interface User {
   type: string;
   site_admin: boolean;
   name: string;
-  company: string;
+  company: string | null;
   blog: string;
-  location: string;
+  location: string | null;
   email?: any;
   hireable?: any;
   bio: string;
