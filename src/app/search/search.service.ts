@@ -1,19 +1,26 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, forkJoin } from 'rxjs';
-import { distinctUntilChanged, map, switchMap } from 'rxjs/operators';
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { BehaviorSubject, combineLatest, forkJoin, of, Subject } from 'rxjs';
+import { catchError, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 import { Cat } from './models/cat.model';
-import { SearchResponse, User } from './models/search-response.model';
+import { CombinedResponseData, SearchResponse, User } from './models/search-response.model';
+
+const defaultResponse: SearchResponse = {
+  incomplete_results: false,
+  total_count: 0,
+  items: []
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class SearchService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private snackbar: MatSnackBar) {}
 
   protected urlPath = 'https://api.github.com/search/users';
 
-  searchQuery$ = new BehaviorSubject('Xephy');
+  searchQuery$ = new Subject<string>();
   pagination$ = new BehaviorSubject({ perPage: 20, page: 1 });
   sort$ = new BehaviorSubject('');
   order$ = new BehaviorSubject('asc')
@@ -36,12 +43,17 @@ export class SearchService {
     };
 
     return this.http.get<SearchResponse>(this.urlPath, params).pipe(
+      catchError(() => of(defaultResponse)),
       switchMap((items) => {
-        return forkJoin(
-          items.items?.map((item) => {
-            return this.http.get<User>(item.url);
-          })
-        ).pipe(map((data) => ({ ...items, items: data })));
+        return forkJoin(items.items?.map((item) => this.http.get<User>(item.url)))
+        .pipe(map((data) => ({ ...items, items: data })));
+      }),
+      catchError((err: HttpErrorResponse) => {
+        err.status === 403
+          ? this.snackbar.open('Please wait an hour before the next search attempt.')._dismissAfter(5000)
+          : this.snackbar.open('Something went wrong. Please try again shortly')._dismissAfter(5000)
+        
+          return of(defaultResponse as CombinedResponseData)
       })
     );
   }))
