@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { tap } from "rxjs/operators";
 import { Cat } from "./models/cat.model";
 import { SortOption } from './models/search-params.model';
 import { sortOptions } from "./search.data";
@@ -15,7 +14,7 @@ import { SearchService } from './search.service';
 export class SearchComponent implements OnInit {
   constructor(private ss: SearchService) {}
 
-  data$ = this.ss.data$.pipe(tap(console.log))
+  data$ = this.ss.data$
   cat$: Observable<Cat> = new Observable()
 
   sortOptions = sortOptions
