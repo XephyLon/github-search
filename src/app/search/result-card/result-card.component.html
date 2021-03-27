@@ -1,10 +1,14 @@
 <mat-card
   class="hover-elevation"
 >
-  <img [src]="profilePicture" [alt]="name" />
+  <img [src]="dataSource.avatar_url" [alt]="dataSource.login" />
   <article>
-    <h2><fa-icon [icon]="faIdCard"></fa-icon>{{ name }}</h2>
-    <h3><fa-icon [icon]="faStar"></fa-icon>{{ starCount }}</h3>
-    <p>{{ description }}</p>
+    <h2><fa-icon [icon]="faIdCard"></fa-icon>{{ dataSource.name }}</h2>
+    <h3><fa-icon [icon]="faSign"></fa-icon>{{ dataSource.login }}</h3>
+    <h3><fa-icon [icon]="faGlobe"></fa-icon> {{ dataSource.location }}</h3>
+    <h3><fa-icon [icon]="faStar"></fa-icon>Followers: {{ dataSource.followers }}</h3>
+    <h3><fa-icon [icon]="faEye"></fa-icon>Following: {{ dataSource.following }}</h3>
+    <h3><fa-icon [icon]="faTwitter"></fa-icon>{{ dataSource.twitter_username }}</h3>
+    <p>{{ dataSource.bio }}</p>
   </article>
 </mat-card>

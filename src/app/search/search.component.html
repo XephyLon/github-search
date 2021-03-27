@@ -26,10 +26,7 @@
 
     <article *ngFor="let item of data.items">
       <app-result-card
-        [name]="item.name"
-        [profilePicture]="item.avatar_url"
-        [description]="item.bio"
-        [profileUrl]="item.html_url"
+        [dataSource]="item"
       ></app-result-card>
     </article>
   </section>
