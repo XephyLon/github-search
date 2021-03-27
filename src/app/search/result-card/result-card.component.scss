@@ -24,7 +24,9 @@
         & mat-card.hover-elevation {
             display: flex;
             justify-content: space-around;
+            border-radius: 12px;
             align-items: center;
+            width: 50vw;
             box-shadow: none;
             // background-size: cover !important;
             @include mat-elevation(2);
