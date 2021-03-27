@@ -35,7 +35,10 @@ $gh-search-theme: mat-dark-theme((
 
 
 @import './app/shared/material-sort-order/material-sort-order.component.scss';
+@import './app//search/result-card/result-card.component.scss';
+
 @include mat-sort-order-theme($gh-search-theme);
+@include result-card-theme();
 
 /* You can add global styles to this file, and also import other style files */
 

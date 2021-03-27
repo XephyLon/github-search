@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  HostBinding,
   HostListener,
   Input,
   OnInit,
@@ -22,6 +23,8 @@ import { User } from "../models/search-response.model";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResultCardComponent {
+  @HostBinding('class') rootClass = 'result-card'
+
   faExternal = faExternalLinkAlt;
   faIdCard = faIdCard;
   faStar = faStar;

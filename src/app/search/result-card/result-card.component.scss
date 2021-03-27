@@ -1,40 +1,44 @@
-@use '../../../styles.scss' as core;
 
-:host {
-    width: 100%;
-}
+@mixin result-card-theme() {
 
-article {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    flex: 1;
-    margin-left: 24px;
-}
+    .result-card {
+        width: 100%;
 
-fa-icon {
-    margin-right: 12px;
-}
-
-img {
-    width: 100px;
-    height: 100px;
-    border-radius: 8px;
-}
-
-mat-card.hover-elevation {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    box-shadow: none;
-    // background-size: cover !important;
-    @include core.mat-elevation(2);
-    &:hover {
-        @include core.mat-elevation-transition;
-        @include core.mat-elevation(12);
-        cursor: pointer;
+        & article {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            flex: 1;
+            margin-left: 24px;
+        }
+        
+        & fa-icon {
+            margin-right: 12px;
+        }
+        
+        & img {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+        }
+        
+        & mat-card.hover-elevation {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: none;
+            // background-size: cover !important;
+            @include mat-elevation(2);
+            &:hover {
+                @include mat-elevation-transition;
+                @include mat-elevation(12);
+                cursor: pointer;
+            }
+        }
+        
+        & p {
+            grid-column-start: span 2;
+        }
     }
+
 }
 
-p {
-    grid-column-start: span 2;
-}
