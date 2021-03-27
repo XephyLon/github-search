@@ -13,7 +13,7 @@
 
 
 <main *ngIf="data$ | async as data">
-  <section *ngIf="data.items!.length > 0; else noResults">
+  <section *ngIf="data.total_count > 0; else noResults">
     <h2>Total results: {{ data.total_count }}</h2>
 
     <mat-paginator
