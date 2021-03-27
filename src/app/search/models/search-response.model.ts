@@ -61,7 +61,7 @@ export interface User {
   updated_at: string;
 }
 
-export interface ResponseData {
+export interface CombinedResponseData {
   items: User[] | undefined;
   total_count: number;
   incomplete_results: boolean;
