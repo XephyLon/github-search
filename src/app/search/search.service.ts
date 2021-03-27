@@ -5,12 +5,7 @@ import { BehaviorSubject, combineLatest, forkJoin, of, Subject } from 'rxjs';
 import { catchError, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 import { Cat } from './models/cat.model';
 import { CombinedResponseData, SearchResponse, User } from './models/search-response.model';
-
-const defaultResponse: SearchResponse = {
-  incomplete_results: false,
-  total_count: 0,
-  items: []
-}
+import { defaultResponse } from "./search.data";
 
 @Injectable({
   providedIn: 'root',
@@ -45,8 +40,10 @@ export class SearchService {
     return this.http.get<SearchResponse>(this.urlPath, params).pipe(
       catchError(() => of(defaultResponse)),
       switchMap((items) => {
-        return forkJoin(items.items?.map((item) => this.http.get<User>(item.url)))
-        .pipe(map((data) => ({ ...items, items: data })));
+        return items.total_count > 0
+        ? forkJoin(items.items?.map((item) => this.http.get<User>(item.url)))
+        .pipe(map((data) => ({ ...items, items: data })))
+        : of(defaultResponse as CombinedResponseData)
       }),
       catchError((err: HttpErrorResponse) => {
         err.status === 403
